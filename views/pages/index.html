@@ -1,0 +1,106 @@
+<html>
+
+<head>
+	<title>Hello World!</title>
+
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script>
+			var quiz = [];
+			function pageLoad() {
+				$.get("quizFile/1", (data) => {
+					console.log(data);
+					quiz = data;
+					show(0);
+				});
+			}
+			var GV_CURRENT_IDX = 0;
+			var GV_NUM_CORRECT = 0;
+			var GV_NUM_WRONG = 0;
+			function show(idx) {
+				GV_CURRENT_IDX = idx;
+				$("#divQuestion").html(quiz[idx].question);
+				let content = "<ol>";
+				quiz[idx].answers.forEach((ans, idx) => {
+
+					let li = `<li><a href='javascript:answer(${idx})'>${ans}</a></li>`;
+					content += li;
+				});
+				$("#divContent").html(content + "</ol>");
+			}
+			function goNext() {
+				show(GV_CURRENT_IDX + 1)
+			}
+			function goPrev() {
+				show(GV_CURRENT_IDX - 1)
+			}
+			function answer(idx) {
+				quiz[GV_CURRENT_IDX].answerGiven = idx;
+
+				if (GV_CURRENT_IDX + 1 == quiz.length) {
+					review();
+				} else {
+					goNext();
+				}
+			}
+			function results() {
+				GV_NUM_CORRECT = 0;
+				GV_NUM_WRONG = 0;
+				let content = "<p>Reivew</p><ol>";
+				quiz.forEach((row) => {
+
+					let li = `<li>Question: ${row.question}.  Your answer: ${row.answers[row.answerGiven]}`
+
+					if (row.answer == row.answerGiven) {
+						GV_NUM_CORRECT++;
+						li += " <font color='green'>is correct</font></li>";
+					}
+					else {
+						GV_NUM_WRONG++;
+						li += " <font color='red'>is incorrect</font></li>";
+
+					}
+
+					content += li;
+				});
+
+
+				$("#divContent").html(content + "</ol><button onclick='results()'>Results</button>");
+
+			}
+			function review() {
+				let content = "<p>Reivew</p><ol>";
+				quiz.forEach((row) => {
+					console.log(row);
+					let li = `<li>Question: ${row.question}.  Your answer: ${row.answers[row.answerGiven]}</li>`
+					content += li;
+				});
+				$("#divContent").html(content + "</ol><button onclick='results()'>Results</button>");
+			}
+			function quizOver() {
+				const results = "<h1>Quiz Over</h1>Number correct: " + GV_NUM_CORRECT + "<br/>Number wrong: " + GV_NUM_WRONG;
+				//alert("Quiz Over");
+				$("#divContent").html(results);
+			}
+			function display() {
+				let content = "<ol>";
+				quiz.forEach((row, idx) => {
+					let li = `<li>${row.question}</li>`;
+					content += li;
+				});
+				$("#divContent").html(content + "</ol>");
+			}
+		</script>
+	</head>
+
+<body onload="pageLoad()">
+	<h1>Quiz!</h1>
+	<button onClick='goPrev()' id='buttonPrev'>Prev</button>
+	<button onClick='goNext()' id='buttonNext'>Next</button>
+	<div id='divQuestion'></div>
+	<div id='divContent'>
+
+	</div>
+</body>
+
+</html>

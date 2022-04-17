@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title>Hello World!</title>
+    <script>
+        var questions = []
+        
+    </script>
+</head>
+
+<body>
+    <h1>Quiz</h1>
+    <p>Questions:</p>
+    <ol>
+        <%quiz.forEach((row, idx)=>{ %> <li>
+                <%=row.question%>
+            </li>
+            <%})%>
+    </ol>
+</body>
+
+</html>

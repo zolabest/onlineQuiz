@@ -1,0 +1,35 @@
+[
+    {
+        "number": 1,
+        "question": "What year is it?",
+        "answers": [
+            2021,
+            2022,
+            2023
+        ],
+        "answer": 1,
+        "answerGiven": 0
+    },
+    {
+        "number": 2,
+        "question": "What country is Paris in?",
+        "answers": [
+            "Germany",
+            "France",
+            "Italy"
+        ],
+        "answer": 1,
+        "answerGiven": 0
+    },
+    {
+        "number": 3,
+        "question": "Which is not an even number?",
+        "answers": [
+            "1",
+            "2",
+            "4"
+        ],
+        "answer": 0,
+        "answerGiven": 0
+    }
+]
